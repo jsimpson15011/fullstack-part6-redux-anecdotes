@@ -8,6 +8,9 @@ const AnecdoteList = ({store}) => {
   anecdotes.sort((a, b) => {
     return (b.votes - a.votes)
   })
+  const filteredAnecdotes = anecdotes.filter((anecdote)=>{
+    return anecdote.content.toLowerCase().includes(store.getState().filter.toLowerCase())
+  })
 
   const vote = (id, content) => {
     store.dispatch(voteOn(id))
@@ -17,8 +20,7 @@ const AnecdoteList = ({store}) => {
 
   return (
     <>
-      <h2>Anecdotes</h2>
-      {anecdotes.map(anecdote =>
+      {filteredAnecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
