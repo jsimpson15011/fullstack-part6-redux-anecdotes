@@ -1,23 +1,32 @@
-export const voteOn = (id) => {
-  return {
-    type: 'VOTE',
-    data: {
-      id: id
-    }
+import anecdoteService from "../services/anecdoteService"
+
+export const voteOn = id => {
+  return async dispatch => {
+    const updatedAnecdote = await anecdoteService.voteFor(id)
+    dispatch({
+      type: 'VOTE',
+      data: { updatedAnecdote }
+    })
   }
 }
 
-export const createAnecdote = (data) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data
+export const createAnecdote = content => {
+  return async dispatch => {
+    const anecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      data: anecdote
+    })
   }
 }
 
-export const initializeAnecdotes = (anecdotes) => {
-  return {
-    type: 'INIT_NOTES',
-    data: anecdotes,
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT_NOTES',
+      data: anecdotes,
+    })
   }
 }
 
@@ -28,16 +37,10 @@ const anecdoteReducer = (state = [], action) => {
     case 'INIT_NOTES':
       return action.data
     case 'VOTE':
-      const id = action.data.id
-      const anecdoteToUpdate = state.find(a => a.id === id)
-      const updatedAnecdote = {
-        ...anecdoteToUpdate,
-        votes: anecdoteToUpdate.votes + 1
-      }
+      const updatedAnecdote = action.data.updatedAnecdote
       return state.map(anecdote =>
-        anecdote.id !== id ? anecdote : updatedAnecdote
+        anecdote.id !== updatedAnecdote.id ? anecdote : updatedAnecdote
       )
-
     default:
       return state
   }

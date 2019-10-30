@@ -4,16 +4,18 @@ export const clearNotification = () => {
   }
 }
 
-export const createNotification = (content) => {
-  return {
-    type: 'CREATE_NOTIFICATION',
-    data: {
-      content: content
-    }
+export const setNotification = (content) => {
+  return dispatch => {
+    dispatch({
+      type: 'CREATE_NOTIFICATION',
+      data: {
+        content: content
+      }
+    })
   }
 }
 
-const notificationReducer = (state = "" , action) => {
+const notificationReducer = (state = "", action) => {
   switch (action.type) {
     case "CREATE_NOTIFICATION":
       return `you voted for ${action.data.content}`

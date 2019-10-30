@@ -2,21 +2,19 @@ import React, {useEffect} from 'react'
 import AnecdoteForm from "./components/AnecdoteForm"
 import AnecdoteList from "./components/AnecdoteList"
 import Notification from "./components/Notification"
-import anecdoteService from "./services/anecdoteService"
-import { initializeAnecdotes } from "./reducers/anecdoteReducer"
-import { connect } from "react-redux"
+import {initializeAnecdotes} from "./reducers/anecdoteReducer"
+import {connect} from "react-redux"
 
 const App = (props) => {
   useEffect(() => {
-    anecdoteService.getAll()
-      .then(anecdotes => props.initializeAnecdotes(anecdotes))
-  },[props])
+    props.initializeAnecdotes()
+  }, [props])
   return (
     <div>
       <h1>Programming anecdotes</h1>
-      <Notification />
-      <AnecdoteForm />
-      <AnecdoteList />
+      <Notification/>
+      <AnecdoteForm/>
+      <AnecdoteList/>
     </div>
   )
 }

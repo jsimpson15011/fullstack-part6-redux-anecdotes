@@ -1,12 +1,12 @@
 import React from 'react'
 import {voteOn} from "../reducers/anecdoteReducer"
-import {createNotification, clearNotification} from "../reducers/notificationReducer"
+import {setNotification, clearNotification} from "../reducers/notificationReducer"
 import {connect} from "react-redux"
 
 const AnecdoteList = (props) => {
   const vote = (id, content) => {
     props.voteOn(id)
-    props.createNotification(content)
+    props.setNotification(content)
     setTimeout(() => {
       props.clearNotification()
     }, 5000)
@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  createNotification,
+  setNotification,
   clearNotification,
   voteOn
 }
