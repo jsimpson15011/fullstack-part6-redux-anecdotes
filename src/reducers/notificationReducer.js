@@ -12,6 +12,12 @@ export const setNotification = (content) => {
         content: content
       }
     })
+
+    setTimeout(() => {
+      dispatch({
+        type: 'CLEAR_NOTIFICATION'
+      })
+    }, 5000)
   }
 }
 

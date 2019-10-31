@@ -7,9 +7,6 @@ const AnecdoteList = (props) => {
   const vote = (id, content) => {
     props.voteOn(id)
     props.setNotification(content)
-    setTimeout(() => {
-      props.clearNotification()
-    }, 5000)
   }
 
   return (
